@@ -1,0 +1,54 @@
+{
+  "name": "rpc-sift",
+  "display-name": "RPC Demo Sift",
+  "description": "",
+  "author": "",
+  "version": "1.0.0",
+  "icon": "assets/blueprint.svg",
+  "interfaces": {
+    "summary": {
+      "controller": "dist/js/controller.umd-es2015.min.js"
+    }
+  },
+  "dag": {
+    "inputs":{
+      "rpc":{
+        "addDomain":{
+          "methods":"POST",
+          "uri":"/domains",
+          "CORS":"*"
+        },
+        "addDomainz":{
+          "methods":[
+            "POST",
+            "GET",
+            "DELETE"
+          ],
+          "uri":"/domains/*"
+        }
+      }
+    },
+    "nodes":[{
+      "#": "RPC",
+      "implementation": {
+        "javascript": "server/rpc.js",
+        "shared": true
+      },
+      "input": {
+        "bucket": "addDomain"
+      },
+      "outputs": {
+        "api_rpc": {}
+      }
+    }],
+    "stores":{
+    },
+    "outputs":{
+      "exports":{
+        "api_rpc":{
+          "import":"_rpc"
+        }
+      }
+    }
+  }
+}
