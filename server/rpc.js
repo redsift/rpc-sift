@@ -22,10 +22,15 @@ module.exports = function (got) {
         // parse raw request
         var req = JSON.parse(d.value);
         console.log("request:",req);
+        var res = {key : d.key, value: {
+                status_code: 200,
+                header: req.header,
+                body: req.body
+              }}
         promises.push(
           new Promise(function (resolve, reject) {
-            var reply = "TODO implement response";
-              resolve();
+              console.log("response:", JSON.stringify(res));
+              resolve(res);
           })
         );
       } catch (ex) {

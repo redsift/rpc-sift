@@ -13,18 +13,10 @@
   "dag": {
     "inputs":{
       "rpc":{
-        "addDomain":{
-          "methods":"POST",
-          "uri":"/domains",
+        "echo":{
+          "methods":"GET",
+          "uri":"/echo",
           "CORS":"*"
-        },
-        "addDomainz":{
-          "methods":[
-            "POST",
-            "GET",
-            "DELETE"
-          ],
-          "uri":"/domains/*"
         }
       }
     },
@@ -35,7 +27,7 @@
         "shared": true
       },
       "input": {
-        "bucket": "addDomain"
+        "bucket": "echo"
       },
       "outputs": {
         "api_rpc": {}

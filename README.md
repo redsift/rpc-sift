@@ -1,6 +1,6 @@
-botfwk-sift
+rpc-sift
 ==================
 
-Botfwk Demo Sift
+RPC Demo Sift
 
 
