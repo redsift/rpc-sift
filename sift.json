@@ -15,7 +15,7 @@
       "rpc":{
         "echo":{
           "methods":"GET",
-          "uri":"/echo",
+          "path":"/echo",
           "CORS":"*"
         }
       }
