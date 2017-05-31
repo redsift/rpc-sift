@@ -16,7 +16,6 @@
         "echo":{
           "methods":["GET", "POST"],
           "path":"/echo",
-          "CORS":"*"
         }
       }
     },
