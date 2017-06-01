@@ -14,7 +14,7 @@
     "inputs":{
       "rpc":{
         "echo":{
-          "methods":["GET", "POST", "PUT"],
+          "methods":["GET", "POST"],
           "path":"/echo"
         }
       }
