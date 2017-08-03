@@ -21,7 +21,7 @@ module.exports = function (got) {
       try {
         // parse raw request
         var req = JSON.parse(d.value);
-        console.log("request:",req);
+        //console.log("request:",req);
         var res = {key : d.key, value: {
                 status_code: 200,
                 header: req.header,
@@ -29,7 +29,7 @@ module.exports = function (got) {
               }}
         promises.push(
           new Promise(function (resolve, reject) {
-              console.log("response:", JSON.stringify(res));
+              //console.log("response:", JSON.stringify(res));
               resolve(res);
           })
         );
