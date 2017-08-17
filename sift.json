@@ -26,13 +26,30 @@
         "shared": true
       },
       "input": {
-        "bucket": "echo"
+        "bucket": "echo",
+        "lookup": [
+          {
+            "bucket": "session",
+            "key": "rpc/uuid"
+          },
+          {
+            "bucket": "session",
+            "key": "input/name"
+          },
+          {
+            "bucket": "session",
+            "key": "input/timestamp"
+          }
+        ]
       },
       "outputs": {
         "api_rpc": {}
       }
     }],
     "stores":{
+      "session": {
+        "import": "_session"
+      }
     },
     "outputs":{
       "exports":{

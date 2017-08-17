@@ -16,17 +16,24 @@ module.exports = function (got) {
   const inData = got.in;
   var promises = [];
 
+  var rpcUUID;
+  got.lookup.forEach(function (lookup) {
+    if (lookup.data.key === 'rpc/uuid') {
+      rpcUUID = lookup.data.value.toString();
+    }
+  });
+
   for (var d of inData.data) {
     if (d.value) {
       try {
         // parse raw request
         var req = JSON.parse(d.value);
         //console.log("request:",req);
-        var res = {key : d.key, value: {
+        var res = {key : rpcUUID/*d.key*/, value: {
                 status_code: 200,
                 header: req.header,
                 body: req.body
-              }}
+              }};
         promises.push(
           new Promise(function (resolve, reject) {
               //console.log("response:", JSON.stringify(res));
