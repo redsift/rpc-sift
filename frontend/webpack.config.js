@@ -26,7 +26,6 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     new webpack.NoEmitOnErrorsPlugin(),
-    new webpack.optimize.UglifyJsPlugin({ sourceMap: true })
   ],
   module: {
     rules: [
