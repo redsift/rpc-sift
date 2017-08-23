@@ -21,8 +21,8 @@ export default class RPCSiftView extends SiftView {
     console.log('[rpc-sift|view] loadView | data:', data);
 
     if (!this._userAccountId) {
-      const { userAccountId, rpcApiConfig } = data;
-      const { apiToken, baseUrl, brandHeaderPrefix } = rpcApiConfig;
+      const { rpcApiConfig } = data;
+      const { apiToken, baseUrl, brandHeaderPrefix, userAccountId } = rpcApiConfig;
 
       this._userAccountId = userAccountId;
       this._apiToken = apiToken;
