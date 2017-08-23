@@ -20,13 +20,15 @@ export default class RPCSiftView extends SiftView {
   async presentView({ data }) {
     console.log('[rpc-sift|view] loadView | data:', data);
 
-    const { userAccountId, rpcApiConfig } = data;
-    const { apiToken, baseUrl, brandHeaderPrefix } = rpcApiConfig;
+    if (!this._userAccountId) {
+      const { userAccountId, rpcApiConfig } = data;
+      const { apiToken, baseUrl, brandHeaderPrefix } = rpcApiConfig;
 
-    this._userAccountId = userAccountId;
-    this._apiToken = apiToken;
-    this._apiBaseUrl = baseUrl;
-    this._brandHeaderPrefix = brandHeaderPrefix;
+      this._userAccountId = userAccountId;
+      this._apiToken = apiToken;
+      this._apiBaseUrl = baseUrl;
+      this._brandHeaderPrefix = brandHeaderPrefix;
+    }
 
     document.getElementById('apiBaseUrl').textContent = this._apiBaseUrl;
     document.getElementById('brandHeaderPrefix').textContent = this._brandHeaderPrefix;
