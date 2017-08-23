@@ -28,6 +28,10 @@ export default class RPCSiftView extends SiftView {
     this._apiBaseUrl = baseUrl;
     this._brandHeaderPrefix = brandHeaderPrefix;
 
+    document.getElementById('apiBaseUrl').textContent = this._apiBaseUrl;
+    document.getElementById('brandHeaderPrefix').textContent = this._brandHeaderPrefix;
+    document.getElementById('userAccountId').textContent = this._userAccountId;
+
     try {
       const response = await this._getDataFromAPI({
         repeatMe: 'A warm welcome from your Sift API!'
