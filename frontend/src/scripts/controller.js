@@ -13,12 +13,12 @@ export default class RPCSiftController extends SiftController {
 
     const userAccountId = params.userAccountId;
     const rpcApiConfig = params.rpcApiConfig;
-    const permissions = params.permissions;
+    const siftPermissionsConfig = params.siftPermissionsConfig;
 
     const data = {
       userAccountId,
       rpcApiConfig,
-      permissions,
+      siftPermissionsConfig,
     };
 
     return {

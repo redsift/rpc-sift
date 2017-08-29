@@ -5,6 +5,46 @@
   "author": "",
   "version": "1.0.0",
   "icon": "assets/blueprint.svg",
+  "permissions": {
+    "superroles": ["superadmin", "superreader"],
+    "resources": ["resourceTypeA", "resourceTypeB"],
+    "grants": {
+      "owner": {
+        "users": {
+          "create:any": ["*"],
+          "update:any": ["*"],
+          "read:any": ["*"],
+          "delete:any": ["*"]
+        },
+        "groups": {
+          "create:any": ["*"],
+          "update:any": ["*"],
+          "read:any": ["*"],
+          "delete:any": ["*"]
+        },
+        "groups:resources": {
+          "create:any": ["*"],
+          "update:any": ["*"],
+          "read:any": ["*"],
+          "delete:any": ["*"]
+        },
+        "groups:users": {
+          "create:any": ["*"],
+          "update:any": ["*"],
+          "read:any": ["*"],
+          "delete:any": ["*"]
+        },
+        "groups:meta": {
+          "create:any": ["*"],
+          "update:any": ["*"],
+          "read:any": ["*"],
+          "delete:any": ["*"]
+        }
+      },
+      "superadmin": {},
+      "superreader": {}
+    }
+  },
   "interfaces": {
     "summary": {
       "controller": "dist/js/controller.umd-es2015.min.js"
