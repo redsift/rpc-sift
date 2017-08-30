@@ -13,20 +13,26 @@ export default class RPCSiftView extends SiftView {
     this._userAccountId = null;
     this._apiToken = null;
     this._apiBaseUrl = null;
-    this.userAccountIdHeaderName = null;
+    this.brandHeaderPrefix = null;
   }
 
   // for more info: http://docs.redsift.com/docs/client-code-siftview
   async presentView({ data }) {
     console.log('[rpc-sift|view] loadView | data:', data);
 
-    const { userAccountId, rpcApiConfig } = data;
-    const { apiToken, baseUrl, userAccountIdHeaderName } = rpcApiConfig;
+    if (!this._userAccountId) {
+      const { rpcApiConfig } = data;
+      const { apiToken, baseUrl, brandHeaderPrefix, userAccountId } = rpcApiConfig;
 
-    this._userAccountId = userAccountId;
-    this._apiToken = apiToken;
-    this._apiBaseUrl = baseUrl;
-    this._userAccountIdHeaderName = userAccountIdHeaderName;
+      this._userAccountId = userAccountId;
+      this._apiToken = apiToken;
+      this._apiBaseUrl = baseUrl;
+      this._brandHeaderPrefix = brandHeaderPrefix;
+    }
+
+    document.getElementById('apiBaseUrl').textContent = this._apiBaseUrl;
+    document.getElementById('brandHeaderPrefix').textContent = this._brandHeaderPrefix;
+    document.getElementById('userAccountId').textContent = this._userAccountId;
 
     try {
       const response = await this._getDataFromAPI({
@@ -48,7 +54,7 @@ export default class RPCSiftView extends SiftView {
       userAccountId: this._userAccountId,
       apiToken: this._apiToken,
       apiBaseUrl: this._apiBaseUrl,
-      apiUserAccountIdHeader: this._userAccountIdHeaderName,
+      brandHeaderPrefix: this._brandHeaderPrefix,
       method: 'POST',
       path: '/echo',
       data: repeatMe,
@@ -62,7 +68,7 @@ export default class RPCSiftView extends SiftView {
     userAccountId,
     apiToken,
     apiBaseUrl,
-    apiUserAccountIdHeader,
+    brandHeaderPrefix,
     method,
     path,
     data = null,
@@ -88,7 +94,7 @@ export default class RPCSiftView extends SiftView {
 
       req.open(method, `${apiBaseUrl}${path}`, true);
 
-      req.setRequestHeader(apiUserAccountIdHeader, userAccountId);
+      req.setRequestHeader(`${brandHeaderPrefix}-Account`, userAccountId);
       req.setRequestHeader('Authorization', `Bearer ${apiToken}`);
 
       headers.forEach((header) => {
