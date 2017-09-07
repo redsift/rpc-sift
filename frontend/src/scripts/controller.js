@@ -11,17 +11,12 @@ export default class RPCSiftController extends SiftController {
   loadView({ params }) {
     console.log('[rpc-sift|controller] loadView | params:', params);
 
-    const userAccountId = params.userAccountId;
-    const rpcApiConfig = params.rpcApiConfig;
-
-    const data = {
-      userAccountId,
-      rpcApiConfig,
-    };
-
+    const {rpcApiConfig} = params
     return {
       html: 'summary.html',
-      data,
+      data: {
+        rpcApiConfig
+      }
     };
   }
 }

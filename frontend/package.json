@@ -10,7 +10,7 @@
     "@redsift/ui-rs-core": "^0.8.3"
   },
   "devDependencies": {
-    "@redsift/sift-sdk-web": "0.7.0",
+    "@redsift/sift-sdk-web": "0.8.4",
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-polyfill": "^6.23.0",
