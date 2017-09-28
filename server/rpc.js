@@ -21,6 +21,9 @@ module.exports = function (got) {
     if (lookup.data.key === 'rpc/uuid') {
       rpcUUID = lookup.data.value.toString();
     }
+    if (lookup.data.key === 'user/permissions') {
+      console.log('permissions = ', lookup.data.value.toString());
+    }
   });
 
   for (var d of inData.data) {

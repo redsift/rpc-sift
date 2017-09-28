@@ -39,6 +39,10 @@
           {
             "bucket": "session",
             "key": "input/timestamp"
+          },
+          {
+            "bucket": "session",
+            "key": "user/permissions"
           }
         ]
       },
