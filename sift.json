@@ -22,8 +22,7 @@
     "nodes":[{
       "#": "RPC",
       "implementation": {
-        "javascript": "server/rpc.js",
-        "shared": true
+        "javascript": "server/rpc.js"
       },
       "input": {
         "bucket": "echo"
