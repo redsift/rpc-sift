@@ -26,18 +26,42 @@
         "shared": true
       },
       "input": {
-        "bucket": "echo"
+        "bucket": "echo",
+        "lookup": [
+          {
+            "bucket": "session",
+            "key": "rpc/uuid"
+          },
+           {
+            "bucket": "session",
+            "key": "rpc/request"
+          },
+          {
+            "bucket": "server",
+            "key": "user/settings"
+          }
+        ]
       },
       "outputs": {
-        "api_rpc": {}
+        "api_rpc": {},
+        "test": {}
       }
     }],
     "stores":{
+      "session": {
+        "import": "_session"
+      },
+      "server":{
+        "import": "_server"
+      }
     },
     "outputs":{
       "exports":{
         "api_rpc":{
           "import":"_rpc"
+        },
+        "test":{
+          "key$schema": "string"
         }
       }
     }

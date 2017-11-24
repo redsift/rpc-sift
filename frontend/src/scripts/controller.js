@@ -7,9 +7,15 @@ import 'babel-polyfill';
 import { SiftController, registerSiftController } from '@redsift/sift-sdk-web';
 
 export default class RPCSiftController extends SiftController {
+  constructor() {
+    super()
+    this.onStorageUpdate = this.onStorageUpdate.bind(this);
+  }
   // for more info: http://docs.redsift.com/docs/client-code-siftcontroller
   loadView({ params }) {
     console.log('[rpc-sift|controller] loadView | params:', params);
+
+     this.storage.subscribe(['test'], this.onStorageUpdate)
 
     const {rpcApiConfig} = params
     return {
@@ -18,6 +24,12 @@ export default class RPCSiftController extends SiftController {
         rpcApiConfig
       }
     };
+  }
+
+  onStorageUpdate() {
+    this.storage.getAll({bucket: 'test'}).then(d => {
+      console.log('server/settings', d);
+    });
   }
 }
 

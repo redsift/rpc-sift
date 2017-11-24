@@ -14,6 +14,14 @@
 // http://docs.redsift.com/docs/server-code-implementation
 module.exports = function (got) {
   const inData = got.in;
+  const inLookup = got.lookup;
+  for (var inl of inLookup) {
+    var d = inl.data
+    console.log("This are the lookup data:", d.key)
+    if(d.value){
+      console.log("value:", d.value.toString())
+    }
+  }
   var promises = [];
 
   for (var d of inData.data) {
@@ -22,13 +30,16 @@ module.exports = function (got) {
         // parse raw request
         var req = JSON.parse(d.value);
         //console.log("request:",req);
-        var res = {key : d.key, value: {
-                status_code: 200,
-                header: req.header,
-                body: req.body
-              }}
+        var res = {
+          name: "api_rpc",
+          key : d.key,
+          value: {
+              status_code: 200,
+              header: req.header,
+              body: req.body
+            }}
         promises.push(
-          new Promise(function (resolve, reject) {
+          new Promise((resolve, reject) => {
               //console.log("response:", JSON.stringify(res));
               resolve(res);
           })
@@ -41,5 +52,12 @@ module.exports = function (got) {
     }
   }
 
+  console.log('inLookup:', JSON.stringify(inLookup[2]));
+
+  promises.push(new Promise( (resolve) => {resolve({
+    name: 'test',
+    key: 'settings',
+    value: { settings: inLookup[2] }
+  })}))
   return promises;
 };
