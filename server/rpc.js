@@ -52,12 +52,12 @@ module.exports = function (got) {
     }
   }
 
-  console.log('inLookup:', JSON.stringify(inLookup[2]));
+  console.log('inLookup:', inLookup[2].data.value.toString());
 
   promises.push(new Promise( (resolve) => {resolve({
-    name: 'test',
-    key: 'settings',
-    value: { settings: inLookup[2] }
+    name: 'settings',
+    key: 'user',
+    value: JSON.parse(inLookup[2].data.value)
   })}))
   return promises;
 };

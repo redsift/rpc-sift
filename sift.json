@@ -44,7 +44,7 @@
       },
       "outputs": {
         "api_rpc": {},
-        "test": {}
+        "settings": {}
       }
     }],
     "stores":{
@@ -60,7 +60,7 @@
         "api_rpc":{
           "import":"_rpc"
         },
-        "test":{
+        "settings":{
           "key$schema": "string"
         }
       }
