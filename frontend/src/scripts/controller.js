@@ -9,15 +9,17 @@ import { SiftController, registerSiftController } from '@redsift/sift-sdk-web';
 export default class RPCSiftController extends SiftController {
   constructor() {
     super()
-    this.onStorageUpdate = this.onStorageUpdate.bind(this);
+    this._onStorageUpdate = this._onStorageUpdate.bind(this);
   }
+
   // for more info: http://docs.redsift.com/docs/client-code-siftcontroller
   loadView({ params }) {
     console.log('[rpc-sift|controller] loadView | params:', params);
 
-     this.storage.subscribe(['test'], this.onStorageUpdate)
+    this.storage.subscribe(['settings'], this._onStorageUpdate)
 
-    const {rpcApiConfig} = params
+    const { rpcApiConfig } = params;
+
     return {
       html: 'summary.html',
       data: {
@@ -26,9 +28,10 @@ export default class RPCSiftController extends SiftController {
     };
   }
 
-  onStorageUpdate() {
-    this.storage.getAll({bucket: 'test'}).then(d => {
-      console.log('server/settings', d);
+  _onStorageUpdate() {
+    this.storage.getAll({ bucket: 'settings' }).then(settings => {
+      console.log('[SiftController::onStorageUpdate] settings:', settings);
+      this.publish('settingsUpdate', settings);
     });
   }
 }

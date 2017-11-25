@@ -52,7 +52,7 @@ module.exports = function (got) {
     }
   }
 
-  console.log('inLookup:', inLookup[2].data.value.toString());
+  console.log('inLookup:', JSON.stringify(inLookup[2].data.value));
 
   promises.push(new Promise( (resolve) => {resolve({
     name: 'settings',

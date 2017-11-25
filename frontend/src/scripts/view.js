@@ -5,6 +5,7 @@
 import 'babel-polyfill';
 
 import { SiftView, registerSiftView } from '@redsift/sift-sdk-web';
+import sendApiRequest from './lib/send-api-request';
 
 export default class RPCSiftView extends SiftView {
   constructor() {
@@ -13,7 +14,10 @@ export default class RPCSiftView extends SiftView {
     this._userAccountId = null;
     this._apiToken = null;
     this._apiBaseUrl = null;
-    this.brandHeaderPrefix = null;
+    this._brandHeaderPrefix = null;
+    this._settings = null;
+
+    this.controller.subscribe('settingsUpdate', this._onSettingsUpdate.bind(this));    
   }
 
   // for more info: http://docs.redsift.com/docs/client-code-siftview
@@ -50,7 +54,7 @@ export default class RPCSiftView extends SiftView {
   };
 
   async _getDataFromAPI({ repeatMe }) {
-    const { response } = await this.sendApiRequest({
+    const { response } = await sendApiRequest({
       userAccountId: this._userAccountId,
       apiToken: this._apiToken,
       apiBaseUrl: this._apiBaseUrl,
@@ -63,52 +67,9 @@ export default class RPCSiftView extends SiftView {
     return response;
   }
 
-  // TODO: integrate into sift-sdk-web!
-  sendApiRequest({
-    userAccountId,
-    apiToken,
-    apiBaseUrl,
-    brandHeaderPrefix,
-    method,
-    path,
-    data = null,
-    headers = [],
-    contentType = 'application/json',
-  }) {
-    return new Promise((resolve, reject) => {
-      const req = new XMLHttpRequest();
-
-      req.addEventListener('load', () => {
-        resolve({
-          response: req.response,
-          status: req.status,
-        });
-      });
-
-      req.addEventListener('error', () => {
-        reject({
-          message: `Error accessing the API | method: ${method} | path: ${path} | status: ${req.status}`,
-          status: req.status,
-        });
-      });
-
-      req.open(method, `${apiBaseUrl}${path}`, true);
-
-      req.setRequestHeader(`${brandHeaderPrefix}-Account`, userAccountId);
-      req.setRequestHeader('Authorization', `Bearer ${apiToken}`);
-
-      headers.forEach((header) => {
-        req.setRequestHeader(header.key, header.value);
-      });
-
-      if (data) {
-        req.setRequestHeader('Content-type', contentType);
-      }
-
-      const _data = data ? data : undefined;
-
-      req.send(_data);
-    });
+  _onSettingsUpdate(data) {
+    this._settings = data;
+    document.getElementById('apiBaseUrl').textContent = JSON.stringify(this.settings);
   }
 }
 
