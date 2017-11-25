@@ -72,7 +72,7 @@ export default class RPCSiftView extends SiftView {
 
     this._settings = data;
 
-    document.getElementById('apiBaseUrl').textContent = JSON.stringify(this.settings);
+    document.getElementById('settings').textContent = JSON.stringify(this.settings);
   }
 }
 

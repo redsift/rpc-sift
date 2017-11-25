@@ -52,11 +52,11 @@ module.exports = function (got) {
     }
   }
 
-  console.log('inLookup:', inLookup[2].data.value);
-
   const settings = inLookup[2].data.value ?
     JSON.parse(inLookup[2].data.value) :
     null;
+
+  console.log('[rpc-sift|rpc.js] settings:', JSON.stringify(settings, null, 4));
 
   promises.push(new Promise( (resolve) => {resolve({
     name: 'settings',
