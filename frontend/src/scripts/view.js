@@ -40,7 +40,7 @@ export default class RPCSiftView extends SiftView {
 
     try {
       const response = await this._getDataFromAPI({
-        repeatMe: 'A warm welcome from your Sift API!'
+        repeatMe: 'A warm welcome from your Sift API!',
       });
 
       console.log('[rpc-sift] API response:', response);
@@ -51,6 +51,14 @@ export default class RPCSiftView extends SiftView {
 
       document.getElementById('apiResult').textContent = err.message;
     }
+
+    document.getElementById('update').onclick = async () => {
+      const response = await this._getDataFromAPI({
+        repeatMe: 'Updated settings!',
+      });
+
+      document.getElementById('apiResult').textContent = response;
+    };
   };
 
   async _getDataFromAPI({ repeatMe }) {
@@ -72,7 +80,8 @@ export default class RPCSiftView extends SiftView {
 
     this._settings = data;
 
-    document.getElementById('settings').textContent = JSON.stringify(this.settings);
+    document.getElementById('settings').textContent =
+      this._settings ? JSON.stringify(this._settings) : 'No settings';
   }
 }
 
