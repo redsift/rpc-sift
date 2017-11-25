@@ -1,68 +1,83 @@
 /**
  * RPC Demo Sift. DAG's 'Node1' node implementation
  */
+
 'use strict';
 
+//
 // Entry point for DAG node
-// got ={
+//
+// got = {
 //   in: ... // contains the key/value pairs that match the given query
 //   with: ... // key/value pairs selected based on the with selection
 //   lookup: ... // an array with result of lookup for a specific key
 //   query: ... // an array containing the key hierarchy
 // }
-// for more info have a look at:
+//
+// For more info have a look at:
 // http://docs.redsift.com/docs/server-code-implementation
+//
 module.exports = function (got) {
-  const inData = got.in;
-  const inLookup = got.lookup;
-  for (var inl of inLookup) {
-    var d = inl.data
-    console.log("This are the lookup data:", d.key)
-    if(d.value){
-      console.log("value:", d.value.toString())
-    }
-  }
-  var promises = [];
+  const {
+    in: inData,
+    lookup: inLookup,
+  } = got;
 
-  for (var d of inData.data) {
-    if (d.value) {
+  //
+  // Debug output for lookup data:
+  //
+  inLookup.forEach(item => {
+    const { data } = item;
+    console.log('[rpc-sift|rpc.js] lookup key:', data.key);
+
+    if (data.value) {
+      console.log('[rpc-sift|rpc.js] lookup value:', data.value.toString());
+    }
+  });
+
+  const outData = [];
+
+  //
+  // Collect output data for 'api_rpc' store:
+  //
+  for (const item of inData.data) {
+    const { key, value } = item;
+
+    if (value) {
       try {
-        // parse raw request
-        var req = JSON.parse(d.value);
-        //console.log("request:",req);
-        var res = {
-          name: "api_rpc",
-          key : d.key,
+        const req = JSON.parse(item.value);
+        const { header, body } = req;
+
+        outData.push({
+          name: 'api_rpc',
+          key,
           value: {
-              status_code: 200,
-              header: req.header,
-              body: req.body
-            }}
-        promises.push(
-          new Promise((resolve, reject) => {
-              //console.log("response:", JSON.stringify(res));
-              resolve(res);
-          })
-        );
-      } catch (ex) {
-        console.error('bot.js: Error parsing value for: ', d.key);
-        console.error('bot.js: Exception: ', ex);
+            status_code: 200,
+            header,
+            body,
+          }
+        });
+      } catch (err) {
+        console.error(`[rpc-sift|rpc.js] Error parsing value | key: ${key} | err:`, err);
         continue;
       }
     }
   }
 
+  //
+  // Collect output data for 'settings' export bucket:
+  //
   const settings = inLookup[2].data.value ?
     JSON.parse(inLookup[2].data.value) :
     null;
 
   console.log('[rpc-sift|rpc.js] settings:', JSON.stringify(settings, null, 4));
 
-  promises.push(new Promise( (resolve) => {resolve({
-    name: 'settings',
-    key: 'user',
-    value: settings,
-  })}));
+  outData.push({
+      name: 'settings',
+      key: 'user',
+      value: settings,
+  });
 
-  return promises;
+  return outData;
 };
