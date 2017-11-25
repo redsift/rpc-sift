@@ -29,8 +29,11 @@ export default class RPCSiftController extends SiftController {
   }
 
   _onStorageUpdate() {
-    this.storage.getAll({ bucket: 'settings' }).then(settings => {
-      console.log('[SiftController::onStorageUpdate] settings:', settings);
+    this.storage.getAll({ bucket: 'settings' }).then(bucket => {
+      console.log('[SiftController::onStorageUpdate] settings bucket:', bucket);
+
+      const settings = JSON.parse(bucket[0].value);
+
       this.publish('settingsUpdate', settings);
     });
   }
