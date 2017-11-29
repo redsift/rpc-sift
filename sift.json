@@ -38,7 +38,7 @@
           },
           {
             "bucket": "server",
-            "key": "user/settings"
+            "key": "account/settings"
           }
         ]
       },
