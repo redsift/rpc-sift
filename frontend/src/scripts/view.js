@@ -16,8 +16,10 @@ export default class RPCSiftView extends SiftView {
     this._apiBaseUrl = null;
     this._brandHeaderPrefix = null;
     this._settings = null;
+    this._google = null;
 
-    this.controller.subscribe('settingsUpdate', this._onSettingsUpdate.bind(this));    
+    this.controller.subscribe('settingsUpdate', this._onSettingsUpdate.bind(this));
+    this.controller.subscribe('googleUpdate', this._onGoogleUpdate.bind(this));
   }
 
   // for more info: http://docs.redsift.com/docs/client-code-siftview
@@ -82,6 +84,15 @@ export default class RPCSiftView extends SiftView {
 
     document.getElementById('settings').textContent =
       this._settings ? JSON.stringify(this._settings) : 'No settings';
+  }
+
+  _onGoogleUpdate(data) {
+    console.log('[SiftView::_onGoogleUpdate] data:', data);
+
+    this._google = data;
+
+    document.getElementById('google').textContent =
+      this._google ? JSON.stringify(this._google) : 'No settings';
   }
 }
 

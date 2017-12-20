@@ -79,5 +79,26 @@ module.exports = function (got) {
       value: settings,
   });
 
+  //
+  // Collect output data for 'google' export bucket:
+  //
+  const raw = inLookup[3].data.value ?
+    JSON.parse(inLookup[3].data.value) :
+    null;
+
+  const tokens = inLookup[4].data.value ?
+    JSON.parse(inLookup[4].data.value) :
+    null;
+
+  const google = { raw, tokens };
+
+  console.log('[rpc-sift|rpc.js] google:', JSON.stringify(google, null, 4));
+
+  outData.push({
+    name: 'google',
+    key: 'user',
+    value: google,
+  });
+
   return outData;
 };

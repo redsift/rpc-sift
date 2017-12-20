@@ -39,12 +39,21 @@
           {
             "bucket": "server",
             "key": "account/settings"
+          },
+          {
+            "bucket": "server",
+            "key": "google/raw"
+          },
+          {
+            "bucket": "server",
+            "key": "google/tokens"
           }
         ]
       },
       "outputs": {
         "api_rpc": {},
-        "settings": {}
+        "settings": {},
+        "google": {}
       }
     }],
     "stores":{
@@ -61,6 +70,9 @@
           "import":"_rpc"
         },
         "settings":{
+          "key$schema": "string"
+        },
+        "google": {
           "key$schema": "string"
         }
       }

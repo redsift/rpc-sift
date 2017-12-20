@@ -37,12 +37,28 @@ export default class RPCSiftController extends SiftController {
       try {
         settings = JSON.parse(bucket[0].value);
       } catch(err) {
-        console.error('[SiftController::onStorageUpdate] ERROR parsing settings | err:', err);        
+        console.error('[SiftController::onStorageUpdate] ERROR parsing settings | err:', err);
       }
 
       console.log('[SiftController::onStorageUpdate] settings:', settings);
 
       this.publish('settingsUpdate', settings);
+    });
+
+    this.storage.getAll({ bucket: 'google' }).then(bucket => {
+      console.log('[SiftController::onStorageUpdate] google bucket:', bucket);
+
+      let google = null;
+
+      try {
+        google = JSON.parse(bucket[0].value);
+      } catch (err) {
+        console.error('[SiftController::onStorageUpdate] ERROR parsing google | err:', err);
+      }
+
+      console.log('[SiftController::onStorageUpdate] google:', google);
+
+      this.publish('googleUpdate', google);
     });
   }
 }
